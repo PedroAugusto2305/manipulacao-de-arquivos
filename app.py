@@ -1,5 +1,7 @@
 from models.funcionario import Funcionario
+import json
 
+# TODO: persistir o ultimo id ao reiniciar programar
 def carregar_ultimo_id():
     try:
         with open('./arquivos/ultimo_id.txt', 'r', encoding='utf-8') as arquivo:
@@ -33,11 +35,25 @@ def cadastrar_funcionario():
 
 # TODO: apagar funcionários
 # TODO: imprimir só nome do funcionário
-# TODO: converter o arquivo em JSON
+# TODO: converter o arquivo em JSON, formatar arquivo json
+
+def converter_para_json():
+    filename = './arquivos/empregados.txt'
+    dict1 = {}
+
+    with open(filename) as fh:
+        for line in fh:
+            command, description = line.strip().split(None, 1)
+            dict1[command] = description.strip()
+    out_file = open('empregados.json', 'w')
+    json.dump(dict1, out_file, indent= 4, sort_keys= False)
+    out_file.close()
+
 # TODO: menu
 
 def main():
     cadastrar_funcionario()
+    converter_para_json()
 
 
 if __name__ == '__main__':
